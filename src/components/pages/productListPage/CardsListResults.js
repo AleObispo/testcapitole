@@ -6,22 +6,16 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
+import { useNavigate } from "react-router-dom";
 
 const CardListResults = (search) => {
+  const history = useNavigate();
   const [productList, setProductList] = useState();
-
   const [filterResult, setFilterResult] = useState();
-
-  console.log(search.search);
-  console.log(productList);
-  console.log(filterResult);
-
   const resultSearch = search.search;
 
   useEffect(() => {
     fetchData({ setProductList });
-
-    /* fecthDetails(); */
   }, []);
 
   useEffect(() => {
@@ -37,12 +31,21 @@ const CardListResults = (search) => {
     setFilterResult(filtered);
   }, [resultSearch]);
 
+  const handleClick = (value) => {
+    history(`/product-details/${value}`);
+    window.location.reload();
+  };
+
   return (
     <MainContainer>
       {resultSearch === "" ? (
         productList?.map((item, index) => {
           return (
-            <CardStyled key={index} sx={{ minWidth: 200, height: 280 }}>
+            <CardStyled
+              elevation={10}
+              key={index}
+              sx={{ minWidth: 200, height: 280 }}
+            >
               <ContainerMedia>
                 <CardMedia
                   component="img"
@@ -51,12 +54,24 @@ const CardListResults = (search) => {
                 />
               </ContainerMedia>
               <CardContent>
-                <StyledDescription>Marca: {item.brand}</StyledDescription>
-                <StyledDescription>Modelo: {item.model}</StyledDescription>
-                <StyledDescription>Precio: €{item.price}</StyledDescription>
+                <StyledDescription>
+                  Marca: <StyledSpan> {item.brand}</StyledSpan>
+                </StyledDescription>
+                <StyledDescription>
+                  Modelo: <StyledSpan> {item.model}</StyledSpan>
+                </StyledDescription>
+                <StyledDescription>
+                  Precio: <StyledSpan> €{item.price}</StyledSpan>
+                </StyledDescription>
               </CardContent>
               <CardActions>
-                <Button size="small">Ver Detalles</Button>
+                <Button
+                  sx={{ fontFamily: "Montserrat", fontWeight: 600 }}
+                  onClick={() => handleClick(item.id)}
+                  size="small"
+                >
+                  Ver Detalles
+                </Button>
               </CardActions>
             </CardStyled>
           );
@@ -73,12 +88,24 @@ const CardListResults = (search) => {
                 />
               </ContainerMedia>
               <CardContent>
-                <StyledDescription>Marca: {item.brand}</StyledDescription>
-                <StyledDescription>Modelo: {item.model}</StyledDescription>
-                <StyledDescription>Precio: €{item.price}</StyledDescription>
+                <StyledDescription>
+                  Marca: <StyledSpan> {item.brand}</StyledSpan>
+                </StyledDescription>
+                <StyledDescription>
+                  Modelo: <StyledSpan> {item.model}</StyledSpan>
+                </StyledDescription>
+                <StyledDescription>
+                  Precio: <StyledSpan> €{item.price}</StyledSpan>
+                </StyledDescription>
               </CardContent>
               <CardActions>
-                <Button size="small">Ver Detalles</Button>
+                <Button
+                  sx={{ fontFamily: "Montserrat", fontWeight: 600 }}
+                  onClick={() => handleClick(item.id)}
+                  size="small"
+                >
+                  Ver Detalles
+                </Button>
               </CardActions>
             </CardStyled>
           );
@@ -93,7 +120,8 @@ const CardListResults = (search) => {
 export default CardListResults;
 
 const ContainerMedia = styled.div`
-  margin-left: 100px;
+  margin-top: 5px;
+  margin-left: 130px;
 
   @media only screen and (max-width: 920px) {
     margin-left: 140px;
@@ -102,8 +130,12 @@ const ContainerMedia = styled.div`
     margin-left: 130px;
   }
 `;
-
+const StyledSpan = styled.span`
+  color: #808b96;
+`;
 const StyledDescription = styled.p`
+  font-family: "Montserrat", sans-serif;
+  color: #212f3d;
   margin-top: 2px;
   margin-bottom: 2px;
 `;
@@ -116,12 +148,12 @@ const CardStyled = styled(Card)`
 `;
 
 const MainContainer = styled.div`
-  padding: 8px;
+  padding: 22px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
+  grid-column-gap: 22px;
+  grid-row-gap: 22px;
   @media only screen and (max-width: 1190px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);

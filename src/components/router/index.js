@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ProductListPageView from "../pages/productListPage";
 import ProductDetailsPageView from "../pages/productDetailsPage";
 import Header from "../elements/Header";
-/* import { BrowserRouter, Route, Switch } from "react-router-dom"; */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function Router() {
@@ -15,7 +14,7 @@ function Router() {
           <Routes>
             <Route path="/" element={<ProductListPageView />} />
             <Route
-              path="/product-details"
+              path="/product-details/:id"
               element={<ProductDetailsPageView />}
             />
           </Routes>
@@ -32,8 +31,7 @@ const MainSection = styled.div`
 `;
 
 const AppContent = styled.div`
-  margin: 10px;
   width: 100%;
   height: auto;
-  background-color: #b0f2c2;
+  background-color: #e5e7e9;
 `;
