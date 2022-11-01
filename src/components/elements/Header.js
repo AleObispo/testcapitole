@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Breadcrumbs, Link } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
-const Header = () => {
-  const recupero = JSON.parse(localStorage.getItem("cart"));
-  const [recover, setRecover] = useState();
-
+// eslint-disable-next-line react/prop-types
+const Header = ({ itemsCart }) => {
   useEffect(() => {
     setTimeout(() => {
       window.localStorage.clear();
-      setRecover(0);
     }, 3600000);
-  }, [recover]);
-
-  useEffect(() => {
-    setRecover(recupero);
-  }, []);
+  }, [itemsCart]);
 
   return (
     <>
@@ -49,8 +42,13 @@ const Header = () => {
         </BreadContainer>
         <CartContainer>
           <StyledToolContainer>
-            {recover !== undefined && (
-              <StyledTool open={true} title={recover} placement="left" arrow>
+            {itemsCart !== undefined && (
+              <StyledTool
+                open={true}
+                title={itemsCart === "null" || !itemsCart ? "0" : itemsCart}
+                placement="left"
+                arrow
+              >
                 <StyledIconButton>
                   <StyledIconCart />
                 </StyledIconButton>

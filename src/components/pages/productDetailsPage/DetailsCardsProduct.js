@@ -1,11 +1,178 @@
+/* eslint-disable react/prop-types */
+import React from "react";
 import styled from "styled-components";
 import { Card } from "@mui/material";
+import {
+  CardContent,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Stack,
+  IconButton,
+} from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-export const ContainerCheckButtons = styled.div`
+// eslint-disable-next-line react/prop-types
+const DetailsCardsProduct = ({
+  colorChoice,
+  storageChoice,
+  buttonEnable,
+  productDetails,
+  handleChange,
+  handleClickPost,
+  handleChangeStorage,
+}) => {
+  return (
+    <MainContainer>
+      <LeftContainer>
+        <CardStyled elevation={10}>
+          <CardContent>
+            <img src={productDetails?.imgUrl} />
+          </CardContent>
+        </CardStyled>
+      </LeftContainer>
+      <RigthContainer>
+        <CardStyledRight elevation={10}>
+          <DescriptionContainer>
+            <DescriptionLeft>
+              <StyledDescription>
+                Marca: <StyledSpan>{productDetails?.brand}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Modelo: <StyledSpan>{productDetails?.model}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Precio: <StyledSpan> € {productDetails?.price}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                CPU: <StyledSpan> {productDetails?.cpu}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                RAM: <StyledSpan> {productDetails?.ram}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Sistema: <StyledSpan> {productDetails?.os}</StyledSpan>
+              </StyledDescription>
+            </DescriptionLeft>
+            <DescriptionRigth>
+              <StyledDescription>
+                Resol. Pantalla:{" "}
+                <StyledSpan> {productDetails?.displayResolution}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Bateria: <StyledSpan> {productDetails?.battery}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Camaras:{" "}
+                <StyledSpan>
+                  {" "}
+                  Front: {productDetails?.primaryCamara}Back:
+                  {productDetails?.secondaryCmera}
+                </StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Dimensiones:{" "}
+                <StyledSpan> {productDetails?.dimentions}</StyledSpan>
+              </StyledDescription>
+              <StyledDescription>
+                Peso: <StyledSpan> {productDetails?.weigth}</StyledSpan>
+              </StyledDescription>
+            </DescriptionRigth>
+          </DescriptionContainer>
+        </CardStyledRight>
+
+        <CardStyledRightBottom elevation={10}>
+          <ContainerActions>
+            <ContainerCheckButtons>
+              <FormControl>
+                <FormLabel
+                  sx={{ fontFamily: "Montserrat" }}
+                  id="demo-radio-buttons-group-label"
+                >
+                  Color
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="radio-buttons-group"
+                  value={
+                    productDetails?.options.colors.length <= 1
+                      ? productDetails?.options.colors[0].name
+                      : colorChoice
+                  }
+                  onChange={handleChange}
+                >
+                  {productDetails?.options.colors.map((item, index) => {
+                    return (
+                      <FormControlLabel
+                        key={index}
+                        value={item?.name}
+                        control={<Radio />}
+                        label={item?.name}
+                      />
+                    );
+                  })}
+                </RadioGroup>
+              </FormControl>
+
+              <FormControl>
+                <FormLabel
+                  sx={{ fontFamily: "Montserrat" }}
+                  id="demo-radio-buttons-group-label"
+                >
+                  Almacenaje
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="radio-buttons-group"
+                  value={
+                    productDetails?.options.storages.length <= 1
+                      ? productDetails?.options.storages[0].name
+                      : storageChoice
+                  }
+                  onChange={handleChangeStorage}
+                >
+                  {productDetails?.options.storages.map((item, index) => {
+                    return (
+                      <FormControlLabel
+                        key={index}
+                        value={item?.name}
+                        control={<Radio />}
+                        label={item?.name}
+                      />
+                    );
+                  })}
+                </RadioGroup>
+              </FormControl>
+            </ContainerCheckButtons>
+            <ContainerButtonAdd>
+              <Stack direction="row" spacing={1}>
+                <IconButton
+                  size="large"
+                  color="primary"
+                  aria-label="add to shopping cart"
+                  disabled={buttonEnable}
+                  onClick={handleClickPost}
+                >
+                  <AddShoppingCartIcon sx={{ width: 40, height: 40 }} />
+                </IconButton>
+              </Stack>
+            </ContainerButtonAdd>
+          </ContainerActions>
+        </CardStyledRightBottom>
+      </RigthContainer>
+    </MainContainer>
+  );
+};
+
+export default DetailsCardsProduct;
+
+const ContainerCheckButtons = styled.div`
   grid-area: 1 / 1 / 2 / 2;
 `;
 
-export const ContainerActions = styled.div`
+const ContainerActions = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -13,7 +180,7 @@ export const ContainerActions = styled.div`
   grid-column-gap: 6px;
   grid-row-gap: 0px;
 `;
-export const MainContainer = styled.div`
+const MainContainer = styled.div`
   font-family: "Montserrat", sans-serif;
   padding-top: 50px;
   justify-content: center;
@@ -46,7 +213,7 @@ export const MainContainer = styled.div`
   }
 `;
 
-export const ContainerButtonAdd = styled.div`
+const ContainerButtonAdd = styled.div`
   position: absolute;
   top: 45%;
   left: 50%;
@@ -54,31 +221,31 @@ export const ContainerButtonAdd = styled.div`
   grid-area: 1 / 2 / 2 / 3;
 `;
 
-export const StyledSpan = styled.span`
+const StyledSpan = styled.span`
   color: #808b96;
 `;
 
-export const StyledDescription = styled.p`
+const StyledDescription = styled.p`
   color: #212f3d;
   margin-top: 2px;
   margin-bottom: 2px;
 `;
 
-export const DescriptionLeft = styled.div`
+const DescriptionLeft = styled.div`
   grid-area: 1 / 1 / 2 / 2;
 `;
-export const DescriptionRigth = styled.div`
+const DescriptionRigth = styled.div`
   grid-area: 1 / 2 / 2 / 3;
 `;
 
-export const DescriptionContainer = styled.div`
+const DescriptionContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 16px;
   grid-row-gap: 0px;
 `;
-export const CardStyled = styled(Card)`
+const CardStyled = styled(Card)`
   && img {
     width: 100%;
     height: 100%;
@@ -87,23 +254,23 @@ export const CardStyled = styled(Card)`
   max-height: 500px;
 `;
 
-export const CardStyledRight = styled(Card)`
+const CardStyledRight = styled(Card)`
   max-width: 400px;
   padding: 10px;
   margin-bottom: 16px;
 `;
-export const CardStyledRightBottom = styled(Card)`
+const CardStyledRightBottom = styled(Card)`
   max-width: 400px;
   padding: 10px;
   margin-bottom: 16px;
 `;
 
-export const LeftContainer = styled.div`
+const LeftContainer = styled.div`
   margin: 0 auto;
   margin-bottom: 16px;
   grid-area: 1 / 1 / 2 / 2;
 `;
-export const RigthContainer = styled.div`
+const RigthContainer = styled.div`
   margin: 0 auto;
   grid-area: 1 / 2 / 2 / 3;
   @media only screen and (max-width: 720px) {
